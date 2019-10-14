@@ -6,7 +6,7 @@ const style = {
     height: 50,
     border: "1px solid black",
     margin: 5,
-    color: "white"
+    color: "white",
   }
 };
 
