@@ -3,7 +3,6 @@ import './index.css';
 import ReactDOM from "react-dom";
 import App from "./App";
 import Test from "./Test";
-import DatePicker from './DatePicker';
 import * as serviceWorker from "./serviceWorker";
 
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
@@ -19,7 +18,6 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
-    <DatePicker />
     <Test />
   </ThemeProvider>,
   document.getElementById("root")
