@@ -14,7 +14,6 @@ const style = {
   paper: {
     backgroundColor: "white",
     border: "2px solid #000",
-    //boxShadow: theme.shadows[5],
     padding: 4
   }
 };
@@ -22,10 +21,6 @@ const style = {
 function InfoModal(props) {
   return (
     <div>
-      <p>Click to get the full Modal experience!</p>
-      <button type="button" onClick={props.onOpenClick}>
-        Open Modal
-      </button>
       <Modal
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
@@ -40,7 +35,7 @@ function InfoModal(props) {
       >
         <Fade in={props.setOpen}>
           <div style={style.paper}>
-            <h2 id="simple-modal-title">Text in a modal</h2>
+            <h2 id="simple-modal-title">Time: {props.time}</h2>
             <p id="simple-modal-description">
               Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
             </p>
@@ -53,7 +48,8 @@ function InfoModal(props) {
 
 function mapStateToProps(state) {
   return {
-    setOpen: state.modal.setOpen
+    setOpen: state.modal.setOpen,
+    time: state.modal.time
   };
 }
 

@@ -4,3 +4,10 @@ export const simpleAction = () => dispatch => {
     payload: 'result_of_simple_action'
   })
 }
+
+export const openModal = (time) => {
+  return {
+    type: "OPENMODAL",
+    time
+  };
+}
