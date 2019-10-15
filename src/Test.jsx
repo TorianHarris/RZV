@@ -6,7 +6,7 @@ import Divider from '@material-ui/core/Divider';
 import Modal from './components/Modal';
 import TimeSlot from "./components/TimeSlot";
 import DatePicker from "./DatePicker";
-const times = [9, 10, 11, 12, 1, 2, 3, 4];
+const times = ['9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm'];
 
 const style = {
   container: {
@@ -39,8 +39,10 @@ export default class Test extends Component {
           <h1 style={style.date}>Tuesday, October 15</h1>
           <Modal store={store} />
           <div style={style.timeSlotContainer}>
-            {times.map(t => (
-              <TimeSlot store={store}>{t}</TimeSlot>
+            {times.map((t, index) => (
+              index < times.length -1 ?
+              <TimeSlot store={store} currentTime={t} nextTime={times[index+1]} />
+              : null
             ))}
           </div>
         </div>

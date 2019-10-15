@@ -10,23 +10,28 @@ const style = {
     border: "1px solid black",
     margin: 5,
     color: "white",
+    fontSize: 18
   }
 };
 
 function TimeSlot(props) {
-  return <Button onClick={() => props.onTimeSlotClick(props.children)} style={style.root} color='primary' variant='contained'>{props.children}</Button>;
+  return (
+    <Button
+      onClick={() => props.onTimeSlotClick(`${props.currentTime} - ${props.nextTime}`, props.currentTime)}
+      style={style.root} color='primary'
+      variant='contained'
+    >
+      {props.currentTime}
+    </Button>
+  );
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    onTimeSlotClick: time => {
-      dispatch(openModal(time))
+    onTimeSlotClick: (title, time) => {
+      dispatch(openModal(title, time))
     }
   }
-    // onOpenClick: (time) => {
-    //   const action = { type: "OPENMODAL", time };
-    //   dispatch(action);
-    // },
 }
 
 export default connect(null, mapDispatchToProps)(TimeSlot)

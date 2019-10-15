@@ -5,6 +5,8 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 
+import Form from './Form';
+
 const style = {
   modal: {
     display: "flex",
@@ -14,7 +16,9 @@ const style = {
   paper: {
     backgroundColor: "white",
     border: "2px solid #000",
-    padding: 4
+    padding: 4,
+    width: '30%',
+    height: '80%'
   }
 };
 
@@ -35,10 +39,7 @@ function InfoModal(props) {
       >
         <Fade in={props.setOpen}>
           <div style={style.paper}>
-            <h2 id="simple-modal-title">Time: {props.time}</h2>
-            <p id="simple-modal-description">
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </p>
+            <Form title={props.title} time={props.time} />
           </div>
         </Fade>
       </Modal>
@@ -49,7 +50,8 @@ function InfoModal(props) {
 function mapStateToProps(state) {
   return {
     setOpen: state.modal.setOpen,
-    time: state.modal.time
+    title: state.modal.title,
+    time: state.modal.time,
   };
 }
 

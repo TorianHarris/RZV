@@ -5,9 +5,10 @@ export const simpleAction = () => dispatch => {
   })
 }
 
-export const openModal = (time) => {
+export const openModal = (title, time) => {
   return {
     type: "OPENMODAL",
+    title,
     time
   };
 }
