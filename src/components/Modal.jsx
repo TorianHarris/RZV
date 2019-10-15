@@ -1,67 +1,76 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
+import React from "react";
+import { connect } from "react-redux";
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
 
-function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
-
-const useStyles = makeStyles(theme => ({
-  paper: {
-    position: 'absolute',
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+const style = {
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
   },
-}));
+  paper: {
+    backgroundColor: "white",
+    border: "2px solid #000",
+    //boxShadow: theme.shadows[5],
+    padding: 4
+  }
+};
 
-export default function SimpleModal() {
-  const classes = useStyles();
-  // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
-  const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+function InfoModal(props) {
   return (
     <div>
       <p>Click to get the full Modal experience!</p>
-      <button type="button" onClick={handleOpen}>
+      <button type="button" onClick={props.onOpenClick}>
         Open Modal
       </button>
       <Modal
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
-        open={open}
-        onClose={handleClose}
+        style={style.modal}
+        open={props.setOpen}
+        onClose={props.onCloseClick}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500
+        }}
       >
-        <div style={modalStyle} className={classes.paper}>
-          <h2 id="simple-modal-title">Text in a modal</h2>
-          <p id="simple-modal-description">
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </p>
-          <SimpleModal />
-        </div>
+        <Fade in={props.setOpen}>
+          <div style={style.paper}>
+            <h2 id="simple-modal-title">Text in a modal</h2>
+            <p id="simple-modal-description">
+              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            </p>
+          </div>
+        </Fade>
       </Modal>
     </div>
   );
 }
+
+function mapStateToProps(state) {
+  return {
+    setOpen: state.modal.setOpen
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onOpenClick: () => {
+      const action = { type: "OPENMODAL" };
+      dispatch(action);
+    },
+    onCloseClick: () => {
+      const action = { type: "CLOSEMODAL" };
+      dispatch(action);
+    }
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(InfoModal);

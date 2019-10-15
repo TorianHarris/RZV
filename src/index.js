@@ -1,6 +1,6 @@
 import React from "react";
-import { Provider } from 'react-redux'
-import configureStore from './Store';
+//import { Provider } from 'react-redux'
+//import configureStore from './Store';
 
 import './index.css';
 import ReactDOM from "react-dom";
@@ -20,11 +20,11 @@ const theme = createMuiTheme({
 });
 
 ReactDOM.render(
-  <Provider store={configureStore()}>
+  //<Provider store={configureStore()}>
     <ThemeProvider theme={theme}>
       <Test />
-    </ThemeProvider>
-  </Provider>,
+    </ThemeProvider>,
+  //</Provider>,
   document.getElementById("root")
 );
 
