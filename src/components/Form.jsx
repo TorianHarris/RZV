@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import FormInput from './FormInput';
 import Button from '@material-ui/core/Button'
 
@@ -41,12 +42,13 @@ class Form extends Component {
 
         <FormInput required label='Name' name='name' value={this.state.name} handleChange={this.handleInputChange} />
         <FormInput required label='Phone Number' name='phoneNumber' value={this.state.phoneNumber} handleChange={this.handleInputChange} />
-        <FormInput label='E-Mail' name='email' value={this.state.email} handleChange={this.handleInputChange}/>
+        {/* <FormInput label='E-Mail' name='email' value={this.state.email} handleChange={this.handleInputChange}/> */}
         <Button
           color='primary'
           variant='contained'
           size='large'
           style={style.button}
+          onClick={() => this.props.onReserve}
         >
           Reserve
         </Button>
@@ -55,4 +57,14 @@ class Form extends Component {
   }
 }
 
-export default Form;
+function mapDispatchToProps(dispatch) {
+  return {
+    onReserve: () => {
+      const action = { type: "SUMBITFORM" };
+      dispatch(action);
+      console.log('Reserved form')
+    },
+  };
+}
+
+export default connect(null,mapDispatchToProps) (Form);

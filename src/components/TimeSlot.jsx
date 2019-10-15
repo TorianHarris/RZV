@@ -10,7 +10,8 @@ const style = {
     border: "1px solid black",
     margin: 5,
     color: "white",
-    fontSize: 18
+    fontSize: 18,
+    textTransform: 'lowercase'
   }
 };
 

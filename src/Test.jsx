@@ -17,10 +17,12 @@ const style = {
     justifyContent: 'center'
   },
   timeSlotContainer: {
-    width: 300
+    width: 300,
+    margin: 'auto'
   },
   date: {
-    color: 'white'
+    color: 'white',
+    textAlign: 'center'
   },
   divider: {
     backgroundColor: 'white',
