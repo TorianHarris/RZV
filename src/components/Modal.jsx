@@ -39,7 +39,7 @@ function InfoModal(props) {
       >
         <Fade in={props.setOpen}>
           <div style={style.paper}>
-            <Form store={props.store} title={props.title} time={props.time} />
+            <Form store={props.store} timeSlot={props.timeSlot} time={props.time} />
           </div>
         </Fade>
       </Modal>
@@ -50,7 +50,7 @@ function InfoModal(props) {
 function mapStateToProps(state) {
   return {
     setOpen: state.modal.setOpen,
-    title: state.modal.title,
+    timeSlot: state.modal.timeSlot,
     time: state.modal.time,
   };
 }

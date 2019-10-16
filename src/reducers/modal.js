@@ -1,21 +1,27 @@
 import axios from 'axios';
 
-export default (state = [], action) => {
+const initialState = {
+  timeSlot: '9am - 10am'
+}
+
+export default (state = initialState, action) => {
   switch (action.type) {
+    case "SETCURRENTTIMESLOT":
+      return Object.assign({}, state, { time: action.time, timeSlot: action.timeSlot });
     case "OPENMODAL":
-      return Object.assign({}, state, { setOpen: true, time: action.time, title: action.title });
+      return Object.assign({}, state, { setOpen: true });
     case "CLOSEMODAL":
       return Object.assign({}, state, { setOpen: false });
     case "SUMBITFORM":
         axios.post('http://localhost:3001/api/putData', {
-          name: 'jim',
-          phoneNumber: 4043729059,
-          date: '2019-10-15',
-          timeSlot: '9am'
+          name: action.name,
+          phoneNumber: action.phoneNumber,
+          // date: '2019-10-15',
+          timeSlot: state.timeSlot
         }).then((response) => {
           console.log(response);
         });
-        break;
+        return state;
     default:
       return state;
   }

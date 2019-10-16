@@ -1,6 +1,6 @@
 import React from "react";
-//import { Provider } from 'react-redux'
-//import configureStore from './Store';
+import { Provider } from 'react-redux'
+import store from './Store';
 
 import './index.css';
 import ReactDOM from "react-dom";
@@ -10,21 +10,21 @@ import * as serviceWorker from "./serviceWorker";
 
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import purple from "@material-ui/core/colors/purple";
-import green from "@material-ui/core/colors/green";
+import red from "@material-ui/core/colors/red";
 
 const theme = createMuiTheme({
   palette: {
     primary: purple,
-    secondary: green
+    secondary: red
   }
 });
 
 ReactDOM.render(
-  //<Provider store={configureStore()}>
+  <Provider store={store}>
     <ThemeProvider theme={theme}>
       <Test />
     </ThemeProvider>,
-  //</Provider>,
+  </Provider>,
   document.getElementById("root")
 );
 

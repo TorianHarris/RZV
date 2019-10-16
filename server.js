@@ -59,21 +59,22 @@ router.delete('/deleteData', (req, res) => {
   });
 });
 
-// this is our create methid
-// this method adds new data in our database
+//create new entry in db
 router.post('/putData', (req, res) => {
   let data = new Data();
 
-  const { id, message } = req.body;
+  const { name, phoneNumber, timeSlot } = req.body;
 
-  if ((!id && id !== 0) || !message) {
+  // simple validation
+  if (!name || !phoneNumber || !timeSlot) {
     return res.json({
       success: false,
       error: 'INVALID INPUTS',
     });
   }
-  data.message = message;
-  data.id = id;
+  data.name = name;
+  data.phoneNumber = phoneNumber;
+  data.timeSlot = timeSlot;
   data.save((err) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });

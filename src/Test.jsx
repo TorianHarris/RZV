@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import store from './Store';
 
 import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
 import Modal from './components/Modal';
 import TimeSlot from "./components/TimeSlot";
+import ReservationInfo from './components/ReservationInfo';
 import DatePicker from "./DatePicker";
 const times = ['9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm'];
 
@@ -39,19 +39,17 @@ export default class Test extends Component {
         {/* <DatePicker /> */}
         <div>
           <h1 style={style.date}>Tuesday, October 15</h1>
-          <Modal store={store} />
+          <Modal />
           <div style={style.timeSlotContainer}>
             {times.map((t, index) => (
-              index < times.length -1 ?
-              <TimeSlot store={store} currentTime={t} nextTime={times[index+1]} />
-              : null
+              index < times.length - 1 ?
+                <TimeSlot currentTime={t} nextTime={times[index + 1]} />
+                : null
             ))}
           </div>
         </div>
-        <Divider orientation="vertical" style={style.divider}/>
-        <div>
-          <h3 style={style.date}>No reservation data for this day</h3>
-        </div>
+        <Divider orientation="vertical" style={style.divider} />
+        <ReservationInfo  phoneNumber='4043729059'/>
       </Container>
     );
   }

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import { sumbitForm } from '../Actions'
+
 import FormInput from './FormInput';
 import Button from '@material-ui/core/Button'
 
@@ -29,7 +31,6 @@ class Form extends Component {
     const value = target.value;
     const name = target.name;
 
-    console.log(value)
     this.setState({
       [name]: value
     });
@@ -38,7 +39,7 @@ class Form extends Component {
   render() {
     return (
       <div style={style.container}>
-        <h3>{this.props.title} Time Slot</h3>
+        <h3>{this.props.timeSlot} Time Slot</h3>
 
         <FormInput required label='Name' name='name' value={this.state.name} handleChange={this.handleInputChange} />
         <FormInput required label='Phone Number' name='phoneNumber' value={this.state.phoneNumber} handleChange={this.handleInputChange} />
@@ -48,7 +49,7 @@ class Form extends Component {
           variant='contained'
           size='large'
           style={style.button}
-          onClick={() => this.props.onReserve}
+          onClick={() => this.props.onReserveClick(this.state.name, this.state.phoneNumber)}
         >
           Reserve
         </Button>
@@ -59,11 +60,9 @@ class Form extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onReserve: () => {
-      const action = { type: "SUMBITFORM" };
-      dispatch(action);
-      console.log('Reserved form')
-    },
+    onReserveClick: (name, phoneNumber) => {
+      dispatch(sumbitForm(name, phoneNumber))
+    }
   };
 }
 

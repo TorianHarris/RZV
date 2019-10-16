@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { openModal } from '../actions/modalActions'
+import { setCurrentTimeSlot } from '../Actions'
 
 import Button from '@material-ui/core/Button'
 const style = {
@@ -19,7 +19,7 @@ function TimeSlot(props) {
   return (
     <Button
       onClick={() => props.onTimeSlotClick(`${props.currentTime} - ${props.nextTime}`, props.currentTime)}
-      style={style.root} color='primary'
+      style={style.root} color={!props.reserved ? 'primary' : 'secondary'}
       variant='contained'
     >
       {props.currentTime}
@@ -29,8 +29,8 @@ function TimeSlot(props) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onTimeSlotClick: (title, time) => {
-      dispatch(openModal(title, time))
+    onTimeSlotClick: (timeSlot, time) => {
+      dispatch(setCurrentTimeSlot(timeSlot, time))
     }
   }
 }

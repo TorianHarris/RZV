@@ -6,7 +6,7 @@ const DataSchema = new Schema(
   {
     name: String,
     phoneNumber: Number,
-    date: Date,
+    // date: Date,
     timeSlot: String
   },
   { timestamps: true }

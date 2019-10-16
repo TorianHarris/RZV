@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 export default function FormInput(props) {
   return (
     <TextField
+      error={props.error}
       required={props.required}
       label={props.label}
       name={props.name}
