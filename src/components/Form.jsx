@@ -49,7 +49,7 @@ class Form extends Component {
           variant='contained'
           size='large'
           style={style.button}
-          onClick={() => this.props.onReserveClick(this.state.name, this.state.phoneNumber)}
+          onClick={() => this.props.onReserveClick(this.state.name, this.state.phoneNumber, this.props.timeSlot)}
         >
           Reserve
         </Button>
@@ -58,12 +58,18 @@ class Form extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    timeSlot: state.modal.timeSlot,
+  };
+}
+
 function mapDispatchToProps(dispatch) {
   return {
-    onReserveClick: (name, phoneNumber) => {
-      dispatch(sumbitForm(name, phoneNumber))
+    onReserveClick: (name, phoneNumber, timeSlot) => {
+      dispatch(sumbitForm(name, phoneNumber, timeSlot))
     }
   };
 }
 
-export default connect(null,mapDispatchToProps) (Form);
+export default connect(mapStateToProps,mapDispatchToProps) (Form);

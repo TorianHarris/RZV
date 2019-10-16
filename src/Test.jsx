@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
+import { getData } from './Actions'
 
 import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
@@ -22,7 +24,7 @@ const style = {
   },
   date: {
     color: 'white',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   divider: {
     backgroundColor: 'white',
@@ -32,7 +34,12 @@ const style = {
   }
 };
 
-export default class Test extends Component {
+
+class Test extends Component {
+  componentDidMount() {
+    this.props.getData();
+    console.log(this.props.data)
+  }
   render() {
     return (
       <Container style={style.container}>
@@ -49,8 +56,25 @@ export default class Test extends Component {
           </div>
         </div>
         <Divider orientation="vertical" style={style.divider} />
-        <ReservationInfo  phoneNumber='4043729059'/>
+        <ReservationInfo name={this.props.currentInfo ? this.props.currentInfo.name : 'null'} phoneNumber={this.props.currentInfo ? this.props.currentInfo.phoneNumber : 'null'} />
       </Container>
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    data: state.modal.data,
+    currentInfo: state.modal.currentInfo
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getData: () => {
+      dispatch(getData());
+    }
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Test)
