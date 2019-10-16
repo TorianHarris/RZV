@@ -15,16 +15,12 @@ export default (state = initialState, action) => {
     case "CLOSEMODAL":
       return Object.assign({}, state, { setOpen: false });
     case "RECEIVED_DATA":
-      console.log("get data reducer", action.data)
       return Object.assign({}, state, { data: action.data });
     case "DATA_SUBMITTED":
-      console.log('data sumbitted');
       return Object.assign({}, state, { status: 'waiting' });
     case "DATA_SUMBIT_SUCCESS":
-      console.log('data sumbit success', action.res);
       return Object.assign({}, state, { status: 'success' });
     case "DATA_SUMBIT_FAIL":
-      console.log('data sumbit failed', action.err)
       return Object.assign({}, state, { status: 'failed' })
     default:
       return state;

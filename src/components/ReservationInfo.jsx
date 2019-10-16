@@ -7,10 +7,11 @@ import Button from '@material-ui/core/Button';
 const style = {
   root: {
     marginLeft: 30,
-    color: 'white'
+    color: 'white',
+    width: 300
   },
   timeSlot: {
-    textAlign: 'center',
+    // textAlign: 'center',
     textTransform: 'uppercase',
     margin: 0
   },
@@ -27,11 +28,18 @@ function ReservationInfo(props) {
         <>
           <h2>Name: {props.name}</h2>
           <h3>Number: {props.phoneNumber}</h3>
+          <Button
+            color='primary'
+            variant='contained'
+            size='medium'
+          >
+            Edit Reservation
+          </Button>
         </>
         :
         <>
           <h3 style={style.header}>No reservation in this time slot</h3>
-          <div style={{ textAlign: 'center' }}>
+          <div >
             <Button
               color='primary'
               variant='contained'
@@ -40,7 +48,7 @@ function ReservationInfo(props) {
               onClick={props.onReservationClick}
             >
               Create Reservation
-      </Button>
+            </Button>
           </div>
         </>
       }

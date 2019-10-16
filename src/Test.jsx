@@ -25,6 +25,8 @@ const style = {
   date: {
     color: 'white',
     textAlign: 'center',
+    marginTop: 0,
+    marginBottom: 20
   },
   divider: {
     backgroundColor: 'white',
@@ -34,12 +36,11 @@ const style = {
   }
 };
 
-
 class Test extends Component {
   componentDidMount() {
     this.props.getData();
-    console.log(this.props.data)
   }
+  
   render() {
     return (
       <Container style={style.container}>
