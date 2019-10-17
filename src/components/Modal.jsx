@@ -40,7 +40,7 @@ function InfoModal(props) {
       >
         <Fade in={props.setOpen}>
           <div style={style.paper}>
-            <Form store={props.store} timeSlot={props.timeSlot} time={props.time} />
+            <Form timeSlot={props.timeSlot} time={props.time} />
           </div>
         </Fade>
       </Modal>

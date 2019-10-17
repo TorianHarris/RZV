@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { sumbitForm } from "../Actions";
+import { sumbitForm, updateData } from "../Actions";
 
 import FormInput from "./FormInput";
 import Button from "@material-ui/core/Button";
@@ -28,19 +28,34 @@ class Form extends Component {
     };
   }
 
+  componentDidMount() {
+    if (this.props.modalType === "edit")
+      this.setState({
+        name: this.props.currentInfo.name,
+        phoneNumber: this.props.currentInfo.phoneNumber
+      });
+  }
+
   handleFormValidation = () => {
     this.setState(
       {
         nameError: this.state.name.length === 0,
-        phoneError: this.state.phoneNumber.length !== 10
+        phoneError: this.state.phoneNumber.toString().length !== 10
       },
       () => {
-        if (!this.state.nameError && !this.state.phoneError)
-          this.props.onReserveClick(
-            this.state.name,
-            this.state.phoneNumber,
-            this.props.timeSlot
-          );
+        if (!this.state.nameError && !this.state.phoneError) {
+          this.props.modalType === "create"
+            ? this.props.onReserveClick(
+                this.state.name,
+                this.state.phoneNumber,
+                this.props.timeSlot
+              )
+            : this.props.onFinishEditClick(
+                this.props.currentInfo._id,
+                this.state.name,
+                this.state.phoneNumber
+              );
+        }
       }
     );
   };
@@ -86,7 +101,7 @@ class Form extends Component {
           style={style.button}
           onClick={this.handleFormValidation}
         >
-          {this.props.modalType === 'create' ? 'Reserve' : 'Edit'}
+          {this.props.modalType === "create" ? "Reserve" : "Finish Editing"}
         </Button>
       </div>
     );
@@ -96,7 +111,8 @@ class Form extends Component {
 function mapStateToProps(state) {
   return {
     timeSlot: state.modal.timeSlot,
-    modalType: state.modal.modalType
+    modalType: state.modal.modalType,
+    currentInfo: state.modal.currentInfo
   };
 }
 
@@ -104,6 +120,9 @@ function mapDispatchToProps(dispatch) {
   return {
     onReserveClick: (name, phoneNumber, timeSlot) => {
       dispatch(sumbitForm(name, phoneNumber, timeSlot));
+    },
+    onFinishEditClick: (id, name, phoneNumber) => {
+      dispatch(updateData(id, name, phoneNumber));
     }
   };
 }

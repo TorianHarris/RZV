@@ -1,169 +1,112 @@
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { getData } from "./Actions";
 
-// /client/App.js
-import React, { Component } from 'react';
-import axios from 'axios';
+import Container from "@material-ui/core/Container";
+import Divider from "@material-ui/core/Divider";
+import Modal from "./components/Modal";
+import TimeSlot from "./components/TimeSlot";
+import ReservationInfo from "./components/ReservationInfo";
 
-import DatePicker from './DatePicker';
-import Button from '@material-ui/core/Button';
+const times = [
+  "9am",
+  "10am",
+  "11am",
+  "12pm",
+  "1pm",
+  "2pm",
+  "3pm",
+  "4pm",
+  "5pm"
+];
 
-export default class App extends Component {
-  // initialize our state
-  state = {
-    data: [],
-    id: 0,
-    message: null,
-    intervalIsSet: false,
-    idToDelete: null,
-    idToUpdate: null,
-    objectToUpdate: null,
-  };
+const style = {
+  container: {
+    height: "100%",
+    display: "flex",
+    // flexDirection: 'column',
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  header: {
+    color: 'white'
+  },
+  timeSlotContainer: {
+    width: 300,
+    margin: "auto"
+  },
+  date: {
+    color: "white",
+    textAlign: "center",
+    marginTop: 0,
+    marginBottom: 20
+  },
+  divider: {
+    backgroundColor: "white",
+    marginLeft: 15,
+    marginRight: 15,
+    height: "60%"
+  }
+};
 
-  // when component mounts, first thing it does is fetch all existing data in our db
-  // then we incorporate a polling logic so that we can easily see if our db has
-  // changed and implement those changes into our UI
+class App extends Component {
   componentDidMount() {
-    this.getDataFromDb();
-    if (!this.state.intervalIsSet) {
-      let interval = setInterval(this.getDataFromDb, 1000);
-      this.setState({ intervalIsSet: interval });
-    }
+    this.props.getData();
   }
 
-  // never let a process live forever
-  // always kill a process everytime we are done using it
-  componentWillUnmount() {
-    if (this.state.intervalIsSet) {
-      clearInterval(this.state.intervalIsSet);
-      this.setState({ intervalIsSet: null });
-    }
-  }
-
-  // just a note, here, in the front end, we use the id key of our data object
-  // in order to identify which we want to Update or delete.
-  // for our back end, we use the object id assigned by MongoDB to modify
-  // data base entries
-
-  // our first get method that uses our backend api to
-  // fetch data from our data base
-  getDataFromDb = () => {
-    fetch('http://localhost:3001/api/getData')
-      .then((data) => data.json())
-      .then((res) => this.setState({ data: res.data }));
-  };
-
-  // our put method that uses our backend api
-  // to create new query into our data base
-  putDataToDB = (message) => {
-    let currentIds = this.state.data.map((data) => data.id);
-    let idToBeAdded = 0;
-    while (currentIds.includes(idToBeAdded)) {
-      ++idToBeAdded;
-    }
-
-    axios.post('http://localhost:3001/api/putData', {
-      id: idToBeAdded,
-      message: message,
-    });
-  };
-
-  // our delete method that uses our backend api
-  // to remove existing database information
-  deleteFromDB = (idTodelete) => {
-    parseInt(idTodelete);
-    let objIdToDelete = null;
-    this.state.data.forEach((dat) => {
-      if (dat.id == idTodelete) {
-        objIdToDelete = dat._id;
-      }
-    });
-
-    axios.delete('http://localhost:3001/api/deleteData', {
-      data: {
-        id: objIdToDelete,
-      },
-    });
-  };
-
-  // our update method that uses our backend api
-  // to overwrite existing data base information
-  updateDB = (idToUpdate, updateToApply) => {
-    let objIdToUpdate = null;
-    parseInt(idToUpdate);
-    this.state.data.forEach((dat) => {
-      if (dat.id == idToUpdate) {
-        objIdToUpdate = dat._id;
-      }
-    });
-
-    axios.post('http://localhost:3001/api/updateData', {
-      id: objIdToUpdate,
-      update: { message: updateToApply },
-    });
-  };
-
-  // here is our UI
-  // it is easy to understand their functions when you
-  // see them render into our screen
   render() {
-    const { data } = this.state;
     return (
-      <div>
-        <DatePicker/>
-        <ul>
-          {data.length <= 0
-            ? 'NO DB ENTRIES YET'
-            : data.map((dat) => (
-                <li style={{ padding: '10px' }} key={data.message}>
-                  <span style={{ color: 'gray' }}> id: </span> {dat.id} <br />
-                  <span style={{ color: 'gray' }}> data: </span>
-                  {dat.message}
-                </li>
-              ))}
-        </ul>
-        <div style={{ padding: '10px' }}>
-          <input
-            type="text"
-            onChange={(e) => this.setState({ message: e.target.value })}
-            placeholder="add something in the database"
-            style={{ width: '200px' }}
-          />
-          <Button variant="contained" color="primary" onClick={() => this.putDataToDB(this.state.message)}>
-            ADD
-          </Button>
+      <>
+      <h1>RZV</h1>
+      <Container style={style.container}>
+        {/* <DatePicker /> */}
+        <div>
+          <h1 style={style.date}>Thursday, October 17</h1>
+          <Modal />
+          <div style={style.timeSlotContainer}>
+            {times.map((t, index) =>
+              index < times.length - 1 ? (
+                <TimeSlot
+                  currentTime={t}
+                  nextTime={times[index + 1]}
+                  reserved={this.props.data.find(
+                    d => d.timeSlot === `${t} - ${times[index + 1]}`
+                  )}
+                  key={index}
+                />
+              ) : null
+            )}
+          </div>
         </div>
-        <div style={{ padding: '10px' }}>
-          <input
-            type="text"
-            style={{ width: '200px' }}
-            onChange={(e) => this.setState({ idToDelete: e.target.value })}
-            placeholder="put id of item to delete here"
-          />
-          <button onClick={() => this.deleteFromDB(this.state.idToDelete)}>
-            DELETE
-          </button>
-        </div>
-        <div style={{ padding: '10px' }}>
-          <input
-            type="text"
-            style={{ width: '200px' }}
-            onChange={(e) => this.setState({ idToUpdate: e.target.value })}
-            placeholder="id of item to update here"
-          />
-          <input
-            type="text"
-            style={{ width: '200px' }}
-            onChange={(e) => this.setState({ updateToApply: e.target.value })}
-            placeholder="put new value of the item here"
-          />
-          <button
-            onClick={() =>
-              this.updateDB(this.state.idToUpdate, this.state.updateToApply)
-            }
-          >
-            UPDATE
-          </button>
-        </div>
-      </div>
+        <Divider orientation="vertical" style={style.divider} />
+        <ReservationInfo
+          name={this.props.currentInfo ? this.props.currentInfo.name : "null"}
+          phoneNumber={
+            this.props.currentInfo ? this.props.currentInfo.phoneNumber : "null"
+          }
+        />
+      </Container>
+      </>
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    data: state.modal.data,
+    currentInfo: state.modal.currentInfo
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getData: () => {
+      dispatch(getData());
+    }
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

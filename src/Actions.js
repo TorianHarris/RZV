@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const openModal = (modalType) => {
+export const openModal = modalType => {
   return { type: "OPENMODAL", modalType: modalType };
 };
 
@@ -14,7 +14,7 @@ export const setCurrentTimeSlot = (timeSlot, time) => dispatch => {
     timeSlot,
     time
   });
-  dispatch({ type: "SET_RESERVATION_DATA" })
+  dispatch({ type: "SET_RESERVATION_DATA" });
 };
 
 export const sumbitForm = (name, phoneNumber, timeSlot) => {
@@ -24,15 +24,36 @@ export const sumbitForm = (name, phoneNumber, timeSlot) => {
       .post("http://localhost:3001/api/putData", {
         name: name,
         phoneNumber: phoneNumber,
-        // date: '2019-10-15',
         timeSlot: timeSlot
+        // date: '', TODO: associate date this timeslot
       })
       .then(response => {
         if (response.data.success) {
           dispatch(getData());
           dispatch(closeModal());
+        } else dispatch({ type: "DATA_SUMBIT_FAIL", err: response.data.error });
+      })
+      .catch(error => {
+        dispatch({ type: "DATA_SUMBIT_FAIL", err: error });
+      });
+  };
+};
+
+export const updateData = (id, name, phoneNumber) => {
+  return function(dispatch) {
+    axios
+      .post("http://localhost:3001/api/updateData", {
+        id: id,
+        update: {
+          name: name,
+          phoneNumber: phoneNumber
         }
-        else dispatch({ type: "DATA_SUMBIT_FAIL", err: response.data.error });
+      })
+      .then(response => {
+        if (response.data.success) {
+          dispatch(getData());
+          dispatch(closeModal());
+        } else dispatch({ type: "DATA_SUMBIT_FAIL", err: response.data.error });
       })
       .catch(error => {
         dispatch({ type: "DATA_SUMBIT_FAIL", err: error });
