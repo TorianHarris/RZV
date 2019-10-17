@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { closeModal } from '../Actions';
 
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -57,13 +58,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onOpenClick: () => {
-      const action = { type: "OPENMODAL" };
-      dispatch(action);
-    },
     onCloseClick: () => {
-      const action = { type: "CLOSEMODAL" };
-      dispatch(action);
+      dispatch(closeModal());
     }
   };
 }

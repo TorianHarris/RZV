@@ -73,7 +73,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getData: () => {
-      dispatch(getData());
+      dispatch(getData())
     }
   };
 }

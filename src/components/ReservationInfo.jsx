@@ -65,7 +65,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onReservationClick: () => {
-      dispatch(openModal())
+      dispatch(openModal('create'))
     }
   };
 }
