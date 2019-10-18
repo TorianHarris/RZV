@@ -14,12 +14,11 @@ const style = {
     alignItems: "center",
     justifyContent: "center"
   },
-  paper: {
-    backgroundColor: "white",
-    border: "2px solid #000",
+  container: {
+    backgroundColor: 'white',
+    border: `3px solid purple`,
     padding: 4,
-    width: '30%',
-    height: '80%'
+    outline: 'none'
   }
 };
 
@@ -39,7 +38,7 @@ function InfoModal(props) {
         }}
       >
         <Fade in={props.setOpen}>
-          <div style={style.paper}>
+          <div style={style.container}>
             <Form timeSlot={props.timeSlot} time={props.time} />
           </div>
         </Fade>

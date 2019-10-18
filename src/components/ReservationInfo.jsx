@@ -37,7 +37,7 @@ function ReservationInfo(props) {
       {props.name && props.phoneNumber ? (
         <>
           <h2>Name: {props.name}</h2>
-          <h3>Number: {formatPhoneNumber(props.phoneNumber)}</h3>
+          <h3>Phone Number: {formatPhoneNumber(props.phoneNumber)}</h3>
           <Button
             color="primary"
             variant="contained"

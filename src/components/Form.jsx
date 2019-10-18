@@ -11,7 +11,9 @@ const style = {
     textAlign: "center"
   },
   button: {
-    marginTop: 20
+    marginTop: 20,
+    marginLeft: 10,
+    marginRight: 10
   }
 };
 
