@@ -1,4 +1,4 @@
-### RZV
+# RZV
 Reservations made simple
 
 ## Available Scripts
