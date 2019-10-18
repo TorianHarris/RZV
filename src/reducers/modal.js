@@ -27,6 +27,7 @@ export default (state = initialState, action) => {
     case "DATA_SUMBIT_SUCCESS":
       return Object.assign({}, state, { status: "success" });
     case "DATA_SUMBIT_FAIL":
+      console.log(action.err);
       return Object.assign({}, state, { status: "failed" });
     default:
       return state;

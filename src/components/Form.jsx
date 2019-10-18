@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { sumbitForm, updateData } from "../Actions";
+import { closeModal, sumbitForm, updateData, deleteData } from "../Actions";
 
 import FormInput from "./FormInput";
 import Button from "@material-ui/core/Button";
@@ -29,7 +29,7 @@ class Form extends Component {
   }
 
   componentDidMount() {
-    if (this.props.modalType === "edit")
+    if (this.props.modalType !== "create")
       this.setState({
         name: this.props.currentInfo.name,
         phoneNumber: this.props.currentInfo.phoneNumber
@@ -46,15 +46,15 @@ class Form extends Component {
         if (!this.state.nameError && !this.state.phoneError) {
           this.props.modalType === "create"
             ? this.props.onReserveClick(
-                this.state.name,
-                this.state.phoneNumber,
-                this.props.timeSlot
-              )
+              this.state.name,
+              this.state.phoneNumber,
+              this.props.timeSlot
+            )
             : this.props.onFinishEditClick(
-                this.props.currentInfo._id,
-                this.state.name,
-                this.state.phoneNumber
-              );
+              this.props.currentInfo._id,
+              this.state.name,
+              this.state.phoneNumber
+            );
         }
       }
     );
@@ -76,33 +76,63 @@ class Form extends Component {
   render() {
     return (
       <div style={style.container}>
-        <h3>{this.props.timeSlot} Time Slot</h3>
-        <FormInput
-          error={this.state.nameError}
-          required
-          label="Name"
-          name="name"
-          value={this.state.name}
-          handleChange={this.handleInputChange}
-        />
-        <FormInput
-          error={this.state.phoneError}
-          required
-          label="Phone Number"
-          name="phoneNumber"
-          value={this.state.phoneNumber}
-          handleChange={this.handleInputChange}
-        />
-        {/* <FormInput label='E-Mail' name='email' value={this.state.email} handleChange={this.handleInputChange}/> */}
-        <Button
-          color="primary"
-          variant="contained"
-          size="large"
-          style={style.button}
-          onClick={this.handleFormValidation}
-        >
-          {this.props.modalType === "create" ? "Reserve" : "Finish Editing"}
-        </Button>
+        {this.props.modalType === 'delete' ?
+          <>
+            <h3>Are you sure want to delete this reservation?</h3>
+            <h3>Name: {this.props.currentInfo.name}</h3>
+            <h3>Phone Number: {this.props.currentInfo.phoneNumber}</h3>
+            <div>
+              <Button
+                color="primary"
+                variant="contained"
+                size="medium"
+                style={style.button}
+                onClick={this.props.onCancelDelete}
+              >
+                Cancel
+            </Button>
+              <Button
+                color="secondary"
+                variant="outlined"
+                size="medium"
+                style={style.button}
+                onClick={() => this.props.onConfirmDelete(this.props.currentInfo._id)}
+              >
+                Delete
+            </Button>
+            </div>
+          </>
+          :
+          <>
+            <h3>{this.props.timeSlot} Time Slot</h3>
+            <FormInput
+              error={this.state.nameError}
+              required
+              label="Name"
+              name="name"
+              value={this.state.name}
+              handleChange={this.handleInputChange}
+            />
+            <FormInput
+              error={this.state.phoneError}
+              required
+              label="Phone Number"
+              name="phoneNumber"
+              value={this.state.phoneNumber}
+              handleChange={this.handleInputChange}
+            />
+            {/* <FormInput label='E-Mail' name='email' value={this.state.email} handleChange={this.handleInputChange}/> */}
+            <Button
+              color="primary"
+              variant="contained"
+              size="large"
+              style={style.button}
+              onClick={this.handleFormValidation}
+            >
+              {this.props.modalType === "create" ? "Reserve" : "Finish Editing"}
+            </Button>
+          </>
+        }
       </div>
     );
   }
@@ -123,6 +153,13 @@ function mapDispatchToProps(dispatch) {
     },
     onFinishEditClick: (id, name, phoneNumber) => {
       dispatch(updateData(id, name, phoneNumber));
+    },
+    onCancelDelete: () => {
+      dispatch(closeModal());
+    },
+    onConfirmDelete: (id) => {
+      console.log('confirm delete action')
+      dispatch(deleteData(id))
     }
   };
 }

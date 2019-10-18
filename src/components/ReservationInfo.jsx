@@ -52,7 +52,7 @@ function ReservationInfo(props) {
             color="secondary"
             variant="outlined"
             size="small"
-            onClick={() => props.onReservationClick("edit")}
+            onClick={() => props.onReservationClick("delete")}
           >
             Delete Reservation
           </Button>

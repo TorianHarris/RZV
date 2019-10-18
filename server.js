@@ -49,6 +49,7 @@ router.post("/updateData", (req, res) => {
 // delete method
 router.delete("/deleteData", (req, res) => {
   const { id } = req.body;
+  console.log(id)
   Data.findByIdAndRemove(id, err => {
     if (err) return res.send(err);
     return res.json({ success: true });

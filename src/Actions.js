@@ -18,7 +18,7 @@ export const setCurrentTimeSlot = (timeSlot, time) => dispatch => {
 };
 
 export const sumbitForm = (name, phoneNumber, timeSlot) => {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch({ type: "DATA_SUBMITTED" });
     axios
       .post("http://localhost:3001/api/putData", {
@@ -40,7 +40,8 @@ export const sumbitForm = (name, phoneNumber, timeSlot) => {
 };
 
 export const updateData = (id, name, phoneNumber) => {
-  return function(dispatch) {
+  console.log(id)
+  return function (dispatch) {
     axios
       .post("http://localhost:3001/api/updateData", {
         id: id,
@@ -61,8 +62,29 @@ export const updateData = (id, name, phoneNumber) => {
   };
 };
 
+export const deleteData = id => {
+  return function (dispatch) {
+    console.log(id)
+    axios.delete('http://localhost:3001/api/deleteData', {
+      data: {
+        id: id
+      }
+    })
+      .then(response => {
+        if (response.data.success) {
+          console.log(response)
+          dispatch(getData());
+          dispatch(closeModal());
+        } else dispatch({ type: "DATA_SUMBIT_FAIL", err: response.data.error });
+      })
+      .catch(error => {
+        dispatch({ type: "DATA_SUMBIT_FAIL", err: error });
+      });
+  }
+}
+
 export const getData = () => {
-  return function(dispatch) {
+  return function (dispatch) {
     fetch("http://localhost:3001/api/getData")
       .then(data => data.json())
       .then(res => dispatch({ type: "RECEIVED_DATA", data: res.data }))
