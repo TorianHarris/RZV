@@ -22,8 +22,8 @@ If a timeslot is already filled, signified by a red color, click 'Delete Reserva
 This should free up the timeslot for a new reservation.
 
 ## Todos
-Deploy the application
-Add feature to select timeslots by date
-Add 'email' and 'notes' section to reservation form
+1. Deploy the application
+2. Add feature to select timeslots by date
+3. Add 'email' and 'notes' section to reservation form
 
 
