@@ -11,7 +11,6 @@ export default (state = initialState, action) => {
       return Object.assign({}, state, {
         time: action.time,
         timeSlot: action.timeSlot,
-        //currentInfo: info ? info : {}
       });
     case "SET_RESERVATION_DATA":
       const info = state.data.find(d => d.timeSlot === state.timeSlot);
@@ -27,7 +26,6 @@ export default (state = initialState, action) => {
     case "DATA_SUMBIT_SUCCESS":
       return Object.assign({}, state, { status: "success" });
     case "DATA_SUMBIT_FAIL":
-      console.log(action.err);
       return Object.assign({}, state, { status: "failed" });
     default:
       return state;

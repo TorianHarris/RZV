@@ -40,7 +40,6 @@ export const sumbitForm = (name, phoneNumber, timeSlot) => {
 };
 
 export const updateData = (id, name, phoneNumber) => {
-  console.log(id)
   return function (dispatch) {
     axios
       .post("http://localhost:3001/api/updateData", {
@@ -64,7 +63,6 @@ export const updateData = (id, name, phoneNumber) => {
 
 export const deleteData = id => {
   return function (dispatch) {
-    console.log(id)
     axios.delete('http://localhost:3001/api/deleteData', {
       data: {
         id: id
@@ -72,7 +70,6 @@ export const deleteData = id => {
     })
       .then(response => {
         if (response.data.success) {
-          console.log(response)
           dispatch(getData());
           dispatch(closeModal());
         } else dispatch({ type: "DATA_SUMBIT_FAIL", err: response.data.error });

@@ -24,7 +24,6 @@ class Form extends Component {
     this.state = {
       name: "",
       phoneNumber: "",
-      email: "",
       nameError: false,
       phoneError: false
     };
@@ -123,7 +122,6 @@ class Form extends Component {
               value={this.state.phoneNumber}
               handleChange={this.handleInputChange}
             />
-            {/* <FormInput label='E-Mail' name='email' value={this.state.email} handleChange={this.handleInputChange}/> */}
             <Button
               color="primary"
               variant="contained"
@@ -160,7 +158,6 @@ function mapDispatchToProps(dispatch) {
       dispatch(closeModal());
     },
     onConfirmDelete: (id) => {
-      console.log('confirm delete action')
       dispatch(deleteData(id))
     }
   };

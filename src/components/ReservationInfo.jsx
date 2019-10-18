@@ -11,7 +11,6 @@ const style = {
     width: 300
   },
   timeSlot: {
-    // textAlign: 'center',
     textTransform: "uppercase",
     margin: 0
   },
@@ -23,10 +22,7 @@ const style = {
 function formatPhoneNumber(num) {
   let formattedNum = num.toString();
   if (formattedNum.length === 10)
-    return `(${formattedNum.slice(0, 3)}) ${formattedNum.slice(
-      3,
-      6
-    )}-${formattedNum.slice(6)}`;
+    return `(${formattedNum.slice(0, 3)}) ${formattedNum.slice(3,6)}-${formattedNum.slice(6)}`;
   return formattedNum;
 }
 

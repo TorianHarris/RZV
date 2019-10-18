@@ -25,8 +25,6 @@ const style = {
     height: "80%",
     display: "flex",
     flexDirection: 'column',
-    //marginTop: 10
-    //alignItems: "center",
     justifyContent: "center",
   },
   title: {
@@ -45,11 +43,9 @@ const style = {
   },
   timeSlotContainer: {
     width: 300,
-    //margin: "auto"
   },
   date: {
     color: "white",
-    //textAlign: "center",
     marginTop: 0,
     marginBottom: 20
   },
@@ -58,11 +54,6 @@ const style = {
     marginLeft: 15,
     marginRight: 15,
     height: '100%'
-    // width: 1,
-    // backgroundColor: 'white',
-    // marginLeft: 20,
-    // marginRight: 20,
-    // height: '500'
   }
 };
 
