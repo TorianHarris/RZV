@@ -8,17 +8,21 @@ import Modal from "./components/Modal";
 import TimeSlot from "./components/TimeSlot";
 import ReservationInfo from "./components/ReservationInfo";
 
-const times = [
-  "9am",
-  "10am",
-  "11am",
-  "12pm",
-  "1pm",
-  "2pm",
-  "3pm",
-  "4pm",
-  "5pm"
-];
+const timeMaker = function (start, end, startMeridiem, endMeridiem) {
+  let time = start;
+  let meridiem = startMeridiem;
+  const times = [];
+  while(time + meridiem !== end + endMeridiem ) {
+    times.push(time + meridiem);
+    if (time === 11)
+      meridiem === 'am' ? meridiem = 'pm' : meridiem = 'am';
+    time === 12 ? time = 1 : time++;
+  }
+  times.push(end + endMeridiem)
+  return times;
+}
+
+const times = timeMaker(9,5,'am','pm');
 
 const style = {
   container: {
