@@ -49,7 +49,8 @@ class Form extends Component {
             ? this.props.onReserveClick(
               this.state.name,
               this.state.phoneNumber,
-              this.props.timeSlot
+              this.props.timeSlot,
+              this.props.date + " " + this.props.year
             )
             : this.props.onFinishEditClick(
               this.props.currentInfo._id,
@@ -141,6 +142,8 @@ class Form extends Component {
 function mapStateToProps(state) {
   return {
     timeSlot: state.modal.timeSlot,
+    date: state.modal.date,
+    year: state.modal.year,
     modalType: state.modal.modalType,
     currentInfo: state.modal.currentInfo
   };
@@ -148,8 +151,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onReserveClick: (name, phoneNumber, timeSlot) => {
-      dispatch(sumbitForm(name, phoneNumber, timeSlot));
+    onReserveClick: (name, phoneNumber, timeSlot, date) => {
+      dispatch(sumbitForm(name, phoneNumber, timeSlot, date));
     },
     onFinishEditClick: (id, name, phoneNumber) => {
       dispatch(updateData(id, name, phoneNumber));

@@ -27,7 +27,8 @@ This should free up the timeslot for a new reservation.
 
 ## Todos
 - [ ] Deploy the application
-- [ ] Add feature to select timeslots by date
+- [x] Add feature to select timeslots by date
+- [ ] Add feature to view calendar
 - [ ] Add 'email' and 'notes' section to reservation form
 
 

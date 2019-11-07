@@ -8,12 +8,14 @@ export const closeModal = () => {
   return { type: "CLOSEMODAL" };
 };
 
-export const changeDate = (operation, key) => {
-  return { 
+export const changeDate = (operation, key) => dispatch => {
+  dispatch({ 
     type: 'CHANGE_DATE',
     operation,
     key
-   }
+   });
+   dispatch({type: "SET_CURRENT_DATE_DATA"});
+   dispatch({type: "SET_RESERVATION_DATA"});
 }
 
 export const setCurrentTimeSlot = (timeSlot, time) => dispatch => {
@@ -25,15 +27,15 @@ export const setCurrentTimeSlot = (timeSlot, time) => dispatch => {
   dispatch({ type: "SET_RESERVATION_DATA" });
 };
 
-export const sumbitForm = (name, phoneNumber, timeSlot) => {
+export const sumbitForm = (name, phoneNumber, timeSlot, date) => {
   return function (dispatch) {
     dispatch({ type: "DATA_SUBMITTED" });
     axios
       .post("http://localhost:3001/api/putData", {
         name: name,
         phoneNumber: phoneNumber,
-        timeSlot: timeSlot
-        // date: '', TODO: associate date this timeslot
+        timeSlot: timeSlot,
+        date: date,
       })
       .then(response => {
         if (response.data.success) {
@@ -93,6 +95,7 @@ export const getData = () => {
     fetch("http://localhost:3001/api/getData")
       .then(data => data.json())
       .then(res => dispatch({ type: "RECEIVED_DATA", data: res.data }))
+      .then(() => dispatch({ type: "SET_CURRENT_DATE_DATA" }))
       .then(() => dispatch({ type: "SET_RESERVATION_DATA" }));
   };
 };

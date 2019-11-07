@@ -58,10 +58,10 @@ router.delete("/deleteData", (req, res) => {
 router.post("/putData", (req, res) => {
   let data = new Data();
 
-  const { name, phoneNumber, timeSlot } = req.body;
+  const { name, phoneNumber, timeSlot, date } = req.body;
 
 // simple validation
-  if (!name || !phoneNumber || !timeSlot) {
+  if (!name || !phoneNumber || !timeSlot || !date) {
     return res.json({
       success: false,
       error: "INVALID INPUTS"
@@ -70,6 +70,8 @@ router.post("/putData", (req, res) => {
   data.name = name;
   data.phoneNumber = phoneNumber;
   data.timeSlot = timeSlot;
+  data.date = date;
+  console.log(date);
   data.save(err => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });

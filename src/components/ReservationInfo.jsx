@@ -8,7 +8,7 @@ const style = {
   root: {
     marginLeft: 30,
     color: "white",
-    minWidth: 300
+    width: 300
   },
   timeSlot: {
     textTransform: "uppercase",

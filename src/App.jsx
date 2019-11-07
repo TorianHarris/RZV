@@ -62,8 +62,8 @@ const style = {
   },
   vertDivider: {
     backgroundColor: "white",
-    marginLeft: 15,
-    marginRight: 15,
+    // marginLeft: 15,
+    marginRight: 10,
     height: '100%'
   },
   horzDivider: {
@@ -128,7 +128,7 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    data: state.modal.data,
+    data: state.modal.currentDateData,
     currentInfo: state.modal.currentInfo,
     date: state.modal.date,
     year: state.modal.year
