@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getData } from "./Actions";
+import { getData, changeDate } from "./Actions";
 
 import Container from "@material-ui/core/Container";
 import Divider from "@material-ui/core/Divider";
@@ -8,17 +8,14 @@ import Modal from "./components/Modal";
 import TimeSlot from "./components/TimeSlot";
 import ReservationInfo from "./components/ReservationInfo";
 
-import Moment from 'react-moment';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon'
-import ArrowBackIos from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
 
 const timeMaker = function (start = 9, end = 5, startMeridiem = 'am', endMeridiem = 'pm') {
   let time = start;
   let meridiem = startMeridiem;
   const times = [];
-  while(time + meridiem !== end + endMeridiem ) {
+  while (time + meridiem !== end + endMeridiem) {
     times.push(time + meridiem);
     if (time === 11)
       meridiem === 'am' ? meridiem = 'pm' : meridiem = 'am';
@@ -51,8 +48,8 @@ const style = {
     justifyContent: "center"
   },
   column: {
-    display: 'flex', 
-    alignItems: 'center', 
+    display: 'flex',
+    alignItems: 'center',
     flexDirection: 'column'
   },
   timeSlotContainer: {
@@ -63,12 +60,18 @@ const style = {
     marginTop: 0,
     marginBottom: 0,
   },
-  divider: {
+  vertDivider: {
     backgroundColor: "white",
     marginLeft: 15,
     marginRight: 15,
     height: '100%'
   },
+  horzDivider: {
+    width: '50%',
+    backgroundColor: 'white',
+    marginTop: 8,
+    marginBottom: 8
+  }
 };
 
 class App extends Component {
@@ -77,21 +80,22 @@ class App extends Component {
   }
 
   render() {
-    const date = new Date();
     return (
       <Container style={style.container}>
         <div style={style.header}>
           <p style={style.title}>RZV</p>
           <h3>Simple Reservation Application</h3>
         </div>
-        <div style={{...style.row, ...{height: 250}}}>
-          <div style={style.column}>
-            <h1 style={style.date}><Moment format="dddd, MMMM DD">{date}</Moment></h1>
+        <div style={{ ...style.row, ...{ height: 300} }}>
+          <div style={{...style.column, ...{ minWidth: 450} }}>
+          <h1 style={style.date}>{this.props.year}</h1>
+          <Divider style={style.horzDivider}/>
+          <h1 style={style.date}>{this.props.date}</h1>
             <div style={style.row}>
-              <IconButton><Icon className='fas fa-angle-double-left icon'/></IconButton>
-              <IconButton><Icon className='fas fa-angle-left icon'/></IconButton>
-              <IconButton><Icon className='fas fa-angle-right icon'/></IconButton>
-              <IconButton><Icon className='fas fa-angle-double-right icon'/></IconButton>
+              <IconButton onClick={() => {this.props.onDateChange('sub', 'M')}}><Icon className='fas fa-angle-double-left icon' /></IconButton>
+              <IconButton onClick={() => {this.props.onDateChange('sub', 'd')}}><Icon className='fas fa-angle-left icon' /></IconButton>
+              <IconButton onClick={() => {this.props.onDateChange('add', 'd')}}><Icon className='fas fa-angle-right icon' /></IconButton>
+              <IconButton onClick={() => {this.props.onDateChange('add', 'M')}}><Icon className='fas fa-angle-double-right icon' /></IconButton>
             </div>
             <div style={style.timeSlotContainer}>
               {times.map((t, index) =>
@@ -108,7 +112,7 @@ class App extends Component {
               )}
             </div>
           </div>
-          <Divider orientation="vertical" style={style.divider} />
+          <Divider orientation="vertical" style={style.vertDivider} />
           <ReservationInfo
             name={this.props.currentInfo ? this.props.currentInfo.name : "null"}
             phoneNumber={
@@ -125,7 +129,9 @@ class App extends Component {
 function mapStateToProps(state) {
   return {
     data: state.modal.data,
-    currentInfo: state.modal.currentInfo
+    currentInfo: state.modal.currentInfo,
+    date: state.modal.date,
+    year: state.modal.year
   };
 }
 
@@ -133,6 +139,9 @@ function mapDispatchToProps(dispatch) {
   return {
     getData: () => {
       dispatch(getData());
+    },
+    onDateChange: (operation, key) => {
+      dispatch(changeDate(operation, key))
     }
   };
 }

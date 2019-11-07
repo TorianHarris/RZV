@@ -8,6 +8,14 @@ export const closeModal = () => {
   return { type: "CLOSEMODAL" };
 };
 
+export const changeDate = (operation, key) => {
+  return { 
+    type: 'CHANGE_DATE',
+    operation,
+    key
+   }
+}
+
 export const setCurrentTimeSlot = (timeSlot, time) => dispatch => {
   dispatch({
     type: "SET_CURRENT_TIME_SLOT",

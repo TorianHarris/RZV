@@ -1,12 +1,22 @@
+var moment = require('moment');
+
 const initialState = {
   data: [],
   currentInfo: {},
   status: "",
+  date: moment().format("dddd, MMMM DD"),
+  year: moment().year(),
   timeSlot: "9am - 10am"
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case "CHANGE_DATE": 
+      const newDate = action.operation === 'add' ? 
+      moment(state.date + state.year, `dddd, MMMM DD Y`).add(1, action.key) :
+      moment(state.date + state.year, `dddd, MMMM DD Y`).subtract(1, action.key)
+      console.log(newDate)
+      return Object.assign({}, state, {date: moment(newDate).format("dddd, MMMM DD"), year: moment(newDate).year()})
     case "SET_CURRENT_TIME_SLOT":
       return Object.assign({}, state, {
         time: action.time,
