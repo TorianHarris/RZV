@@ -10,3 +10,13 @@ body {
     -moz-osx-font-smoothing: grayscale;
     background-color: #1e1a1f;
   }
+
+.icon {
+  color: #e1bee7;
+  transition: color 0.15s;
+}
+
+.icon:hover {
+  color: #ef5350;
+  transition: color 0.3s;
+}
