@@ -24,8 +24,11 @@ class Form extends Component {
     this.state = {
       name: "",
       phoneNumber: "",
+      email: "",
+      notes: "",
       nameError: false,
-      phoneError: false
+      phoneError: false,
+      emailError: false
     };
   }
 
@@ -38,13 +41,15 @@ class Form extends Component {
   }
 
   handleFormValidation = () => {
+    const rgx = /@/;
     this.setState(
       {
         nameError: this.state.name.length === 0,
-        phoneError: this.state.phoneNumber.toString().length !== 10
+        phoneError: this.state.phoneNumber.toString().length !== 10,
+        emailError: this.state.email.length > 0 && !rgx.test(this.state.email),
       },
       () => {
-        if (!this.state.nameError && !this.state.phoneError) {
+        if (!this.state.nameError && !this.state.phoneError && !this.state.emailError) {
           this.props.modalType === "create"
             ? this.props.onReserveClick(
               this.state.name,
@@ -64,20 +69,25 @@ class Form extends Component {
 
   handleInputChange = event => {
     const target = event.target;
-    const value = target.value;
+    let value = target.value;
     const name = target.name;
 
+    if(name === 'name') {
+      value = value.replace(/^[0-9]/, "")
+    }
+    if(name === "phoneNumber") {
+      value = value.replace(/\D/, "")
+    }
+
     this.setState({
-      [name]:
-        name === "phoneNumber"
-          ? value.replace(/\D/, "")
-          : value.replace(/^[0-9]/, "")
+      [name]: value
     });
   };
 
   render() {
     return (
       <div style={style.container}>
+        {/* delete reservation modal */}
         {this.props.modalType === 'delete' ?
           <>
             <h3>Are you sure want to delete this reservation?</h3>
@@ -105,6 +115,7 @@ class Form extends Component {
             </div>
           </>
           :
+          // create / edit reservation modal 
           <>
             <h3>{this.props.timeSlot} Time Slot</h3>
             <FormInput
@@ -121,6 +132,13 @@ class Form extends Component {
               label="Phone Number"
               name="phoneNumber"
               value={this.state.phoneNumber}
+              handleChange={this.handleInputChange}
+            />
+             <FormInput
+              error={this.state.emailError}
+              label="Email"
+              name="email"
+              value={this.state.email}
               handleChange={this.handleInputChange}
             />
             <Button

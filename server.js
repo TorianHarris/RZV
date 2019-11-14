@@ -71,7 +71,7 @@ router.post("/putData", (req, res) => {
   data.phoneNumber = phoneNumber;
   data.timeSlot = timeSlot;
   data.date = date;
-  console.log(date);
+
   data.save(err => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
