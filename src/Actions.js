@@ -1,4 +1,5 @@
 import axios from "axios";
+const baseUrl = process.env.baseURL || "http://localhost:3001"
 
 export const openModal = modalType => {
   return { type: "OPENMODAL", modalType: modalType };
@@ -31,7 +32,7 @@ export const sumbitForm = (name, phoneNumber, timeSlot, date) => {
   return function (dispatch) {
     dispatch({ type: "DATA_SUBMITTED" });
     axios
-      .post("http://localhost:3001/api/putData", {
+      .post(baseUrl + "/api/putData", {
         name: name,
         phoneNumber: phoneNumber,
         timeSlot: timeSlot,
@@ -52,7 +53,7 @@ export const sumbitForm = (name, phoneNumber, timeSlot, date) => {
 export const updateData = (id, name, phoneNumber) => {
   return function (dispatch) {
     axios
-      .post("http://localhost:3001/api/updateData", {
+      .post(baseUrl + "/api/updateData", {
         id: id,
         update: {
           name: name,
@@ -73,7 +74,7 @@ export const updateData = (id, name, phoneNumber) => {
 
 export const deleteData = id => {
   return function (dispatch) {
-    axios.delete('http://localhost:3001/api/deleteData', {
+    axios.delete(baseUrl + '/api/deleteData', {
       data: {
         id: id
       }
@@ -92,7 +93,7 @@ export const deleteData = id => {
 
 export const getData = () => {
   return function (dispatch) {
-    fetch("http://localhost:3001/api/getData")
+    fetch(baseUrl + "/api/getData")
       .then(data => data.json())
       .then(res => dispatch({ type: "RECEIVED_DATA", data: res.data }))
       .then(() => dispatch({ type: "SET_CURRENT_DATE_DATA" }))
