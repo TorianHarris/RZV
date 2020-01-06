@@ -29,14 +29,16 @@ const times = timeMaker();
 
 const style = {
   container: {
-    height: "80%",
+    // height: "80%",
     display: "flex",
     flexDirection: 'column',
     justifyContent: "center",
   },
   title: {
-    fontSize: 72,
-    margin: 5
+    fontSize: 54,
+    margin: 0,
+    marginBottom: 5,
+    backgroundColor: 'purple'
   },
   header: {
     color: 'white',
@@ -67,7 +69,7 @@ const style = {
     height: '100%'
   },
   horzDivider: {
-    width: '50%',
+    width: '40%',
     backgroundColor: 'white',
     marginTop: 8,
     marginBottom: 8
@@ -81,12 +83,12 @@ class App extends Component {
 
   render() {
     return (
-      <Container style={style.container}>
+      <div style={style.container}>
         <div style={style.header}>
           <p style={style.title}>RZV</p>
-          <h3>Simple Reservation Application</h3>
+          {/* <h3>Simple Reservation Application</h3> */}
         </div>
-        <div style={{ ...style.row, ...{ height: 300} }}>
+        {/* <div style={{ ...style.row, ...{ height: 300} }}> */}
           <div style={{...style.column, ...{ minWidth: 450} }}>
           <h1 style={style.date}>{this.props.year}</h1>
           <Divider style={style.horzDivider}/>
@@ -111,17 +113,17 @@ class App extends Component {
                 ) : null
               )}
             </div>
-          </div>
-          <Divider orientation="vertical" style={style.vertDivider} />
-          <ReservationInfo
+            <Divider style={style.vertDivider} />
+            <ReservationInfo
             name={this.props.currentInfo ? this.props.currentInfo.name : "null"}
             phoneNumber={
               this.props.currentInfo ? this.props.currentInfo.phoneNumber : "null"
             }
           />
-        </div>
+          </div>
+        {/* </div> */}
         <Modal />
-      </Container>
+      </div>
     );
   }
 }
