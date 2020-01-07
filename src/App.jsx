@@ -78,7 +78,7 @@ const style = {
     marginBottom: 6
   },
   horzDividerLg: {
-    width: "80%",
+    width: "65%",
     backgroundColor: "white",
     marginTop: 10,
     marginBottom: 20
@@ -146,7 +146,7 @@ class App extends Component {
                 ) : null
               )}
             </div>
-            <Hidden xsDown>
+            {/* <Hidden smUp> */}
               <Divider style={style.horzDividerLg} />
               <ReservationInfo
                 name={
@@ -156,7 +156,7 @@ class App extends Component {
                   this.props.currentInfo? this.props.currentInfo.phoneNumber: "null"
                 }
               />
-            </Hidden>
+            {/* </Hidden> */}
           </div>
         {/* </div> */}
         <Modal />
