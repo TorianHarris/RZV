@@ -73,14 +73,14 @@ const style = {
   },
   horzDivider: {
     width: "40%",
-    backgroundColor: "white",
+    backgroundColor: "#e1bee7",
     marginTop: 6,
     marginBottom: 6
   },
   horzDividerLg: {
     width: "65%",
     backgroundColor: "white",
-    marginTop: 10,
+    marginTop: 20,
     marginBottom: 20
   }
 };
