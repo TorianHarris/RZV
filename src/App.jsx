@@ -3,76 +3,85 @@ import { connect } from "react-redux";
 import { getData, changeDate } from "./Actions";
 
 import Container from "@material-ui/core/Container";
+import Hidden from "@material-ui/core/Hidden";
 import Divider from "@material-ui/core/Divider";
 import Modal from "./components/Modal";
 import TimeSlot from "./components/TimeSlot";
 import ReservationInfo from "./components/ReservationInfo";
 
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon'
+import IconButton from "@material-ui/core/IconButton";
+import Icon from "@material-ui/core/Icon";
 
-const timeMaker = function (start = 9, end = 5, startMeridiem = 'am', endMeridiem = 'pm') {
+const timeMaker = function(
+  start = 9,
+  end = 5,
+  startMeridiem = "am",
+  endMeridiem = "pm"
+) {
   let time = start;
   let meridiem = startMeridiem;
   const times = [];
   while (time + meridiem !== end + endMeridiem) {
     times.push(time + meridiem);
-    if (time === 11)
-      meridiem === 'am' ? meridiem = 'pm' : meridiem = 'am';
-    time === 12 ? time = 1 : time++;
+    if (time === 11) meridiem === "am" ? (meridiem = "pm") : (meridiem = "am");
+    time === 12 ? (time = 1) : time++;
   }
-  times.push(end + endMeridiem)
+  times.push(end + endMeridiem);
   return times;
-}
+};
 
 const times = timeMaker();
 
 const style = {
   container: {
-    // height: "80%",
     display: "flex",
-    flexDirection: 'column',
-    justifyContent: "center",
+    flexDirection: "column",
+    justifyContent: "center"
   },
   title: {
     fontSize: 54,
-    margin: 0,
-    marginBottom: 5,
-    backgroundColor: 'purple'
+    margin: 0
   },
   header: {
-    color: 'white',
-    textAlign: 'center',
+    color: "white",
+    textAlign: "center",
+    marginBottom: 10,
+    backgroundColor: "#5c007a"
   },
   row: {
-    display: 'flex',
+    display: "flex",
     alignItems: "center",
     justifyContent: "center"
   },
   column: {
-    display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'column'
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "column"
   },
   timeSlotContainer: {
-    width: 300,
+    width: 300
   },
   date: {
     color: "white",
     marginTop: 0,
-    marginBottom: 0,
+    marginBottom: 0
   },
   vertDivider: {
     backgroundColor: "white",
-    // marginLeft: 15,
     marginRight: 10,
-    height: '100%'
+    height: "100%"
   },
   horzDivider: {
-    width: '40%',
-    backgroundColor: 'white',
-    marginTop: 8,
-    marginBottom: 8
+    width: "40%",
+    backgroundColor: "white",
+    marginTop: 6,
+    marginBottom: 6
+  },
+  horzDividerLg: {
+    width: "80%",
+    backgroundColor: "white",
+    marginTop: 10,
+    marginBottom: 20
   }
 };
 
@@ -88,16 +97,40 @@ class App extends Component {
           <p style={style.title}>RZV</p>
           {/* <h3>Simple Reservation Application</h3> */}
         </div>
-        {/* <div style={{ ...style.row, ...{ height: 300} }}> */}
-          <div style={{...style.column, ...{ minWidth: 450} }}>
-          <h1 style={style.date}>{this.props.year}</h1>
-          <Divider style={style.horzDivider}/>
-          <h1 style={style.date}>{this.props.date}</h1>
+        {/* <div style={{ ...style.row, ...{ height: 300 } }}> */}
+          <div style={style.column}>
+            <h1 style={style.date}>{this.props.year}</h1>
+            <Divider style={style.horzDivider} />
+            <h1 style={style.date}>{this.props.date}</h1>
             <div style={style.row}>
-              <IconButton onClick={() => {this.props.onDateChange('sub', 'M')}}><Icon className='fas fa-angle-double-left icon' /></IconButton>
-              <IconButton onClick={() => {this.props.onDateChange('sub', 'd')}}><Icon className='fas fa-angle-left icon' /></IconButton>
-              <IconButton onClick={() => {this.props.onDateChange('add', 'd')}}><Icon className='fas fa-angle-right icon' /></IconButton>
-              <IconButton onClick={() => {this.props.onDateChange('add', 'M')}}><Icon className='fas fa-angle-double-right icon' /></IconButton>
+              <IconButton
+                onClick={() => {
+                  this.props.onDateChange("sub", "M");
+                }}
+              >
+                <Icon className="fas fa-angle-double-left icon" />
+              </IconButton>
+              <IconButton
+                onClick={() => {
+                  this.props.onDateChange("sub", "d");
+                }}
+              >
+                <Icon className="fas fa-angle-left icon" />
+              </IconButton>
+              <IconButton
+                onClick={() => {
+                  this.props.onDateChange("add", "d");
+                }}
+              >
+                <Icon className="fas fa-angle-right icon" />
+              </IconButton>
+              <IconButton
+                onClick={() => {
+                  this.props.onDateChange("add", "M");
+                }}
+              >
+                <Icon className="fas fa-angle-double-right icon" />
+              </IconButton>
             </div>
             <div style={style.timeSlotContainer}>
               {times.map((t, index) =>
@@ -113,13 +146,17 @@ class App extends Component {
                 ) : null
               )}
             </div>
-            <Divider style={style.vertDivider} />
-            <ReservationInfo
-            name={this.props.currentInfo ? this.props.currentInfo.name : "null"}
-            phoneNumber={
-              this.props.currentInfo ? this.props.currentInfo.phoneNumber : "null"
-            }
-          />
+            <Hidden xsDown>
+              <Divider style={style.horzDividerLg} />
+              <ReservationInfo
+                name={
+                  this.props.currentInfo ? this.props.currentInfo.name : "null"
+                }
+                phoneNumber={
+                  this.props.currentInfo? this.props.currentInfo.phoneNumber: "null"
+                }
+              />
+            </Hidden>
           </div>
         {/* </div> */}
         <Modal />
@@ -143,12 +180,9 @@ function mapDispatchToProps(dispatch) {
       dispatch(getData());
     },
     onDateChange: (operation, key) => {
-      dispatch(changeDate(operation, key))
+      dispatch(changeDate(operation, key));
     }
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
