@@ -93,6 +93,7 @@ export const deleteData = id => {
 
 export const getData = () => {
   return function (dispatch) {
+    console.log(baseUrl)
     fetch(baseUrl + "/api/getData")
       .then(data => data.json())
       .then(res => dispatch({ type: "RECEIVED_DATA", data: res.data }))
