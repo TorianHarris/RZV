@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = process.env.baseURL || "http://localhost:3001"
+const baseUrl = process.env.PORT || "http://localhost:3001"
 
 export const openModal = modalType => {
   return { type: "OPENMODAL", modalType: modalType };
